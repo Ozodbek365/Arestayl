@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y">
+    <div class="container">
+
+        <div class="row">
+            <aside class="col-md-3">
+                <nav class="list-group">
+                    <a class="list-group-item active" href="{% url 'profile' %}"> Account overview </a>
+                    <a class="list-group-item" href="{% url 'profile-address' %}"> My Address </a>
+                    <a class="list-group-item" href="{% url 'profile-orders' %}"> My Orders </a>
+                    <a class="list-group-item" href="page-profile-wishlist.html"> My wishlist </a>
+                    <a class="list-group-item" href="{% url 'profile-settings' %}"> Settings </a>
+                    <a class="list-group-item" href="{% url 'logaut' %}"> Log out </a>
+                </nav>
+            </aside> <!-- col.// -->
+            <main class="col-md-9">
+
+                <article class="card mb-3">
+                    <div class="card-body">
+
+                        <figure class="icontext">
+                            <div class="icon">
+                                <img class="rounded-circle img-sm border" src="/static/images/profile.png">
+                            </div>
+                            <div class="text">
+                                <strong> {{ user.get_full_name }} </strong> <br>
+                                <p class="mb-2"> +{{ user.username }} </p>
+                                <a href="{% url 'profile-settings' %}" class="btn btn-light btn-sm">Edit</a>
+                            </div>
+                        </figure>
+                        <hr>
+                        <p>
+                            <i class="fa fa-map-marker text-muted"></i> &nbsp; My address: {{ user.get_full_address }}
+                        </p>
+
+
+                        <article class="card-group card-stat">
+                            <figure class="card bg">
+                                <div class="p-3">
+                                    <h4 class="title">{{ user.order_set.all.count }}</h4>
+                                    <span>Orders</span>
+                                </div>
+                            </figure>
+                            <figure class="card bg">
+                                <div class="p-3">
+                                    <h4 class="title">{{ user.favorite_set.all.count }}</h4>
+                                    <span>Wishlists</span>
+                                </div>
+                            </figure>
+                            <figure class="card bg">
+                                <div class="p-3">
+                                    <h4 class="title">{{ awaiting_orders }}</h4>
+                                    <span>Awaiting delivery</span>
+                                </div>
+                            </figure>
+                            <figure class="card bg">
+                                <div class="p-3">
+                                    <h4 class="title">{{ order_items }}</h4>
+                                    <span>Delivered items</span>
+                                </div>
+                            </figure>
+                        </article>
+
+
+                    </div> <!-- card-body .// -->
+                </article> <!-- card.// -->
+
+
+            </main> <!-- col.// -->
+        </div>
+
+    </div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+{% endblock %}

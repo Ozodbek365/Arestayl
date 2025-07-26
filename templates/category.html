@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y">
+<div class="container">
+
+<nav class="row">
+	{% for sub_category in category.subcategory_set.all %}
+		<div class="col-md-3">
+			<div class="card card-category">
+			  <div class="img-wrap" style="background: #ffd7d7">
+			  	<img src="{{ sub_category.image.url }}">
+			  </div>
+			  <div class="card-body">
+			    <h4 class="card-title"><a href="{% url 'sub-category' category.slug sub_category.slug %}">{{ sub_category.title }}</a></h4>
+			  </div>
+			</div>
+        </div>
+	{% endfor %}
+</nav> <!-- row.// -->
+
+</div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+{% endblock %}
