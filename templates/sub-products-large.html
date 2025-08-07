@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y">
+    <div class="container">
+
+
+        <!-- ============================  FILTER TOP  ================================= -->
+        <div class="card mb-3">
+            <div class="card-body">
+                <ol class="breadcrumb float-left">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'category' subcategory.category.slug %}">
+                        {{ subcategory.category.title }}</a></li>
+                    <li class="breadcrumb-item active">{{ subcategory.title }}</li>
+                </ol>
+            </div> <!-- card-body .// -->
+        </div> <!-- card.// -->
+        <!-- ============================ FILTER TOP END.// ================================= -->
+
+
+        <div class="row">
+            <aside class="col-md-2">
+
+                <article class="filter-group">
+                    <h6 class="title">
+                        <a href="#" class="dropdown-toggle" data-toggle="collapse" data-target="#collapse_1"> Product
+                            type </a>
+                    </h6>
+                    <div class="filter-content collapse show" id="collapse_1">
+                        <div class="inner">
+                            <ul class="list-menu">
+                                <li><a href="#">Shorts </a></li>
+                                <li><a href="#">Trousers </a></li>
+                                <li><a href="#">Sweaters </a></li>
+                                <li><a href="#">Clothes </a></li>
+                                <li><a href="#">Home items </a></li>
+                                <li><a href="#">Jackats</a></li>
+                                <li><a href="#">Somethings </a></li>
+                            </ul>
+                        </div> <!-- inner.// -->
+                    </div>
+                </article> <!-- filter-group  .// -->
+                <article class="filter-group">
+                    <h6 class="title">
+                        <a href="#" class="dropdown-toggle" data-toggle="collapse" data-target="#collapse_2">
+                            Brands </a>
+                    </h6>
+                    <div class="filter-content collapse show" id="collapse_2">
+                        <div class="inner">
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" checked="" class="custom-control-input">
+                                <div class="custom-control-label">Adidas
+                                    <b class="badge badge-pill badge-light float-right">120</b></div>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" checked="" class="custom-control-input">
+                                <div class="custom-control-label">Nike
+                                    <b class="badge badge-pill badge-light float-right">15</b></div>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" checked="" class="custom-control-input">
+                                <div class="custom-control-label">The Noth Face
+                                    <b class="badge badge-pill badge-light float-right">35</b></div>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" checked="" class="custom-control-input">
+                                <div class="custom-control-label">The cat
+                                    <b class="badge badge-pill badge-light float-right">89</b></div>
+                            </label>
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input">
+                                <div class="custom-control-label">Honda
+                                    <b class="badge badge-pill badge-light float-right">30</b></div>
+                            </label>
+                        </div> <!-- inner.// -->
+                    </div>
+                </article> <!-- filter-group .// -->
+                <article class="filter-group">
+                    <h6 class="title">
+                        <a href="#" class="dropdown-toggle" data-toggle="collapse" data-target="#collapse_3"> Price
+                            range </a>
+                    </h6>
+                    <div class="filter-content collapse show" id="collapse_3">
+                        <div class="inner">
+                            <input type="range" class="custom-range" min="0" max="100" name="">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Min</label>
+                                    <input class="form-control" placeholder="$0" type="number">
+                                </div>
+                                <div class="form-group text-right col-md-6">
+                                    <label>Max</label>
+                                    <input class="form-control" placeholder="$1,0000" type="number">
+                                </div>
+                            </div> <!-- form-row.// -->
+                            <button class="btn btn-block btn-primary">Apply</button>
+                        </div> <!-- inner.// -->
+                    </div>
+                </article> <!-- filter-group .// -->
+
+
+            </aside> <!-- col.// -->
+            <main class="col-md-10">
+
+
+                <header class="mb-3">
+                    <div class="form-inline">
+                        <strong class="mr-md-auto">{{ products.count }} Items found </strong>
+                        <select class="mr-2 form-control">
+                            <option>Latest items</option>
+                            <option>Trending</option>
+                            <option>Most Popular</option>
+                            <option>Cheapest</option>
+                        </select>
+                        <div class="btn-group">
+                            <a href="{% url 'sub-category' subcategory.category.slug subcategory.slug %}?view=large"
+                               class="btn btn-light" data-toggle="tooltip" title="List view">
+                                <i class="fa fa-bars"></i></a>
+                            <a href="{% url 'sub-category' subcategory.category.slug subcategory.slug %}"
+                               class="btn btn-light active" data-toggle="tooltip" title="Grid view">
+                                <i class="fa fa-th"></i></a>
+                        </div>
+                    </div>
+                </header><!-- sect-heading -->
+
+
+                <article class="card card-product-list">
+                    <div class="row no-gutters">
+                        {% for product in products %}
+                        <aside class="col-md-3">
+                            <a href="#" class="img-wrap">
+                                <img src="{{ product.image_set.first.image.url }}">
+                            </a>
+                        </aside> <!-- col.// -->
+                        <div class="col-md-6">
+                            <div class="info-main">
+                                <a href="{% url 'product' product.slug %}" class="h5 title"> {{ product.name }}</a>
+                                <div class="rating-wrap mb-2">
+                                    <ul class="rating-stars">
+                                        <li style="width: {{ rating_percentage }}%; width: 100%" class="stars-active">
+                                            <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </li>
+                                    </ul>
+
+                                    <div class="label-rating">{{ product.rating }}</div>
+                                </div> <!-- rating-wrap.// -->
+
+                                <p class="mb-3">
+                                    <span class="tag"> {{ product.guarantee }} </span>
+                                    <span class="tag"> {{ product.review_set.count }} reviews </span>
+                                    <span class="tag"> {{ product.country }} </span>
+                                </p>
+
+                                <p> {{ product.description|truncatechars:350 }} </p>
+
+                            </div> <!-- info-main.// -->
+                        </div> <!-- col.// -->
+                        <aside class="col-sm-3">
+                            <div class="info-aside">
+                                <div class="price-wrap">
+                                    <span class="h5 price">$ {{ product.price }}</span>
+                                    <small class="text-muted">/per item</small>
+                                </div> <!-- price-wrap.// -->
+                                <small class="text-warning">Paid shipping</small>
+
+                                <p class="text-muted mt-3">{{ product.brand }}</p>
+                                <p class="mt-3">
+                                    <a href="{% url 'add-to-cart' product.id %}" class="btn btn-outline-primary"> <i class="fa fa-cart-arrow-down"></i> Add to Card</a>
+                                    <a href="{% url 'add-to-wishlist' product.id %}" class="btn btn-danger"><i class="fa fa-heart"></i></a>
+                                </p>
+
+
+                            </div> <!-- info-aside.// -->
+                        </aside><!-- col.// -->
+                        {% endfor %}
+                    </div> <!-- row.// -->
+                </article> <!-- card-product .// -->
+
+
+                <nav class="mb-4" aria-label="Page navigation sample">
+                    <ul class="pagination">
+                        <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                        <li class="page-item"><a class="page-link" href="#">5</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                </nav>
+
+
+                <div class="box text-center">
+                    <p>Did you find what you were looking for？</p>
+                    <a href="" class="btn btn-light">Yes</a>
+                    <a href="" class="btn btn-light">No</a>
+                </div>
+
+
+            </main> <!-- col.// -->
+
+        </div>
+
+    </div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+{% endblock %}

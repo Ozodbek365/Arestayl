@@ -60,7 +60,7 @@ class Product(models.Model):
     guarantee = models.CharField(max_length=255, blank=True, null=True)
     delevery_time = models.CharField(max_length=255, blank=True, null=True)
     country = models.CharField(max_length=255, blank=True, null=True)
-    rating = models.FloatField(validators=[MinValueValidator(1.0), MaxValueValidator(5.0)])
+    rating = models.FloatField(validators=[MinValueValidator(1.0), MaxValueValidator(5.0)], default=5.0)
     views = models.PositiveIntegerField(default=0)
     sub_category = models.ForeignKey(SubCategory, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -87,7 +87,7 @@ class Image(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.image
+        return str(self.image)
 
 class Review(models.Model):
     comment = models.TextField(blank=True, null=True)

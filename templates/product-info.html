@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="py-3 bg-light">
+  <div class="container">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'category' product.sub_category.category.slug %}">{{ product.sub_category.category.title }}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'sub-category' product.sub_category.category.slug product.sub_category.slug %}">{{ product.sub_category.title }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content bg-white padding-y">
+<div class="container">
+
+<!-- ============================ ITEM DETAIL ======================== -->
+	<div class="row">
+		<aside class="col-md-6">
+<div class="card">
+<article class="gallery-wrap"> 
+	<div class="img-big-wrap">
+	  <div> <a href="#"><img src="{{ mainImage.image.url }}"></a></div>
+	</div> <!-- slider-product.// -->
+	<div class="thumbs-wrap">
+	    {% for media in product.image_set.all %}
+            <a href="/products/{{ product.slug }}/?mainImage={{ forloop.counter0 }}"
+               class="item-thumb"> <img src="{{ media.image.url }}"></a>
+	    {% endfor %}
+    </div> <!-- slider-nav.// -->
+</article> <!-- gallery-wrap .end// -->
+</div> <!-- card.// -->
+		</aside>
+		<main class="col-md-6">
+<article class="product-info-aside">
+
+<h2 class="title mt-3">{{ product.name }} </h2>
+
+<div class="rating-wrap my-3">
+	<ul class="rating-stars">
+		<li style="width: {{ rating_percentage }}%; width: 100%" class="stars-active">
+			<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+			<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+			<i class="fa fa-star"></i> 
+		</li>
+		<li>
+			<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+			<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+			<i class="fa fa-star"></i>
+		</li>
+	</ul>
+	<small class="label-rating text-muted">{{ product.review_set.count }} reviews</small>
+	<small class="label-rating text-success"> <i class="fa fa-clipboard-check"></i> {{ product.orderitem_set.count }} orders </small>
+</div> <!-- rating-wrap.// -->
+
+<div class="mb-3"> 
+	<var class="price h4">USD {{ product.price }}</var>
+	<span class="text-muted">{% if discount %} {{ discount.percentage }} {% endif %}</span>
+</div> <!-- price-detail-wrap .// -->
+
+<p>{{ product.description|truncatechars:350 }} </p>
+
+
+<dl class="row">
+  <dt class="col-sm-3">Brand</dt>
+  <dd class="col-sm-9"><a href="#">{{ product.brand }}</a></dd>
+
+  <dt class="col-sm-3">Article number</dt>
+  <dd class="col-sm-9">{{ product.id }}</dd>
+
+  <dt class="col-sm-3">Guarantee</dt>
+  <dd class="col-sm-9">{{ product.guarantee }}</dd>
+
+  <dt class="col-sm-3">Delivery time</dt>
+  <dd class="col-sm-9">{{ product.delevery_time }}</dd>
+
+  <dt class="col-sm-3">Do'konda</dt>
+    {% if mahsulot.mavjud %}
+  <dd class="col-sm-9">Mavjud</dd>
+    {% else %}
+    <dd class="col-sm-9">Mavjud emas</dd>
+    {% endif %}
+</dl>
+
+	<div class="form-row  mt-4">
+		<div class="form-group col-md">
+			<a href="{% url 'add-to-cart' product.id %}"  class="btn  btn-primary">
+				<i class="fas fa-shopping-cart"></i> <span class="text">Add to cart</span> 
+			</a>
+            <a href="{% url 'add-to-wishlist' product.id %}" class="btn btn-danger">
+                <i class="fas fa-heart"></i>
+            </a>
+		</div> <!-- col.// -->
+	</div> <!-- row.// -->
+
+</article> <!-- product-info-aside .// -->
+		</main> <!-- col.// -->
+	</div> <!-- row.// -->
+
+<!-- ================ ITEM DETAIL END .// ================= -->
+
+
+</div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+
+<div class="container d-flex justify-content-center align-items-center" style="margin-top: 40px">
+<form method="post">
+    {%csrf_token%}
+  <div class="form-group">
+    <label for="smileyRating">Your rating</label>
+   <div class="rating-container d-flex" id="smileyRating" style="gap: 20px;">
+      <input type="radio" name="rating" value="1" id="smiley1" style="display:none;">
+      <label class="smiley-face" for="smiley1" style="cursor: pointer">&#9785;</label>
+      <input type="radio" name="rating" value="2" id="smiley2" style="display:none;">
+      <label class="smiley-face" for="smiley2" style="cursor: pointer">&#x1F610;</label>
+      <input type="radio" name="rating" value="3" id="smiley3" style="display:none;">
+      <label class="smiley-face" for="smiley3" style="cursor: pointer">&#x1F642;</label>
+      <input type="radio" name="rating" value="4" id="smiley4" style="display:none;">
+      <label class="smiley-face" for="smiley4" style="cursor: pointer">&#x1F600;</label>
+      <input type="radio" name="rating" value="5" id="smiley5" style="display:none;">
+      <label class="smiley-face" for="smiley5" style="cursor: pointer">&#x1F929;</label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputComment1">Your comment</label>
+    <input type="text" class="form-control" id="exampleInputComment1" aria-describedby="commentHelp" placeholder="Enter your comment" name="comment">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<div id="selectedRating"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    var smileyFaces = document.querySelectorAll('.smiley-face');
+
+    smileyFaces.forEach((face) => {
+      face.addEventListener('click', () => {
+        // reset transform of all smiley faces
+        smileyFaces.forEach((face) => {
+          face.style.transform = "none"; // add !important if necessary
+        });
+        // scale up the clicked smiley face
+        face.style.transform = "scale(2)"; // add !important if necessary
+      });
+    });
+  });
+</script>
+</div>
+
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <h2 class="text-center mb-4">Reviews</h2>
+      <hr>
+      {% for review in product.review_set.all %}
+        <div class="row">
+          <div class="col-sm-2">
+            <div class="text-center">
+              {% if review.rating == 1 %}
+                <span class="smiley-face">&#9785;</span>
+              {% elif review.rating == 2 %}
+                <span class="smiley-face">&#x1F610;</span>
+              {% elif review.rating == 3 %}
+                <span class="smiley-face">&#x1F642;</span>
+              {% elif review.rating == 4 %}
+                <span class="smiley-face">&#x1F600;</span>
+              {% elif review.rating == 5 %}
+                <span class="smiley-face">&#x1F929;</span>
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-sm-10">
+            <p>{{ review.comment }}</p>
+             <div class="user d-flex" style="gap: 300px">
+                <p><small class="text-muted">{{ review.created_at }}</small></p>
+                <p><small class="text-muted">{{ review.user.get_full_name }}</small></p>
+            </div>
+          </div>
+        </div>
+        <hr>
+      {% empty %}
+        <p>No reviews yet.</p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
