@@ -82,7 +82,7 @@
                             <div class="card-banner border-bottom">
                                 <div class="py-3" style="width:80%">
                                     <h6 class="card-title">Uy jihozlari </h6>
-                                    <a href="" class="btn btn-secondary btn-sm"> Source now </a>
+                                    <a href="#" class="btn btn-secondary btn-sm"> Source now </a>
                                 </div>
                                 <img src="/media/images/do.jpg" height="80" class="img-bg">
                             </div>
@@ -158,15 +158,15 @@
                 <div class="col-md-9">
                     <ul class="row no-gutters bordered-cols">
                         {% for product in products|slice:"16:24" %}
-                           <li class="col-6 col-lg-3 col-md-4">
-                               <a href="{% url 'product' product.slug %}" class="item">
-                                   <div class="card-body">
-                                       <h6 class="title">{{ product.name }} </h6>
-                                       <img class="img-sm float-right" src="{{ product.image_set.first.image.url }}">
-                                       <p class="text-muted"><i class="fa fa-map-marker-alt"></i> {{ product.country }}</p>
-                                   </div>
-                               </a>
-                           </li>
+                        <li class="col-6 col-lg-3 col-md-4">
+                            <a href="{% url 'product' product.slug %}" class="item">
+                                <div class="card-body">
+                                    <h6 class="title">{{ product.name }} </h6>
+                                    <img class="img-sm float-right" src="{{ product.image_set.first.image.url }}">
+                                    <p class="text-muted"><i class="fa fa-map-marker-alt"></i> {{ product.country }}</p>
+                                </div>
+                            </a>
+                        </li>
                         {% endfor %}
                     </ul>
                 </div> <!-- col.// -->
@@ -176,69 +176,36 @@
     <!-- =============== SECTION 2 END =============== -->
 
 
-    <!-- =============== SECTION REQUEST =============== -->
 
-    <section class="padding-bottom">
-
-        <header class="section-heading heading-line">
-            <h4 class="title-section text-uppercase">Request for Quotation</h4>
-        </header>
-
+    <!-- =============== SECTION BANNER =============== -->
+     <section class="padding-bottom">
         <div class="row">
-            <div class="col-md-8">
-                <div class="card-banner banner-quote overlay-gradient"
-                     style="background-image: url('images/banners/banner9.jpg');">
-                    <div class="card-img-overlay white">
-                        <h3 class="card-title">An easy way to send request to suppliers</h3>
-                        <p class="card-text" style="max-width: 400px">Lorem ipsum dolor sit amet, consectetur
-                            adipisicing elit, sed do eiusmod
-                            tempor incididunt.</p>
-                        <a href="" class="btn btn-primary rounded-pill">Learn more</a>
+            <aside class="col-md-6">
+                <div class="card card-banner-lg bg-dark">
+                    <img src="/static/images/banners/ec.jpg" class="card-img opacity">
+                    <div class="card-img-overlay text-white">
+                        <h2 class="card-title">Buy From Our Website</h2>
+                        <p class="card-text" style="max-width: 80%">This is a wider card with text below and Lorem ipsum
+                            dolor sit amet, consectetur adipisicing elit. Illo ab quae nihil praesentium impedit libero
+                            possimus id vero</p>
                     </div>
                 </div>
-            </div> <!-- col // -->
-            <div class="col-md-4">
-
-                <div class="card card-body">
-                    <h4 class="title py-3">One Request, Multiple Quotes</h4>
-                    <form>
-                        <div class="form-group">
-                            <input class="form-control" name="" placeholder="What are you looking for?" type="text">
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <input class="form-control" placeholder="Quantity" name="" type="text">
-
-                                <select class="custom-select form-control">
-                                    <option>Pieces</option>
-                                    <option>Litres</option>
-                                    <option>Tons</option>
-                                    <option>Gramms</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group text-muted">
-                            <p>Select template type:</p>
-                            <label class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" value="option1">
-                                <span class="form-check-label">Request price</span>
-                            </label>
-                            <label class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" value="option2">
-                                <span class="form-check-label">Request a sample</span>
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-warning">Request for quote</button>
-                        </div>
-                    </form>
+            </aside>
+            <div class="col-md-6">
+                <div class="card card-banner-lg bg-dark">
+                    <img src="/static/images/banners/ban.jpg" class="card-img opacity">
+                    <div class="card-img-overlay text-white">
+                        <h2 class="card-title">Drink Pure & Healthy Water</h2>
+                        <p class="card-text" style="max-width: 80%">Card with text below and Lorem ipsum dolor sit amet,
+                            consectetur adipisicing elit. Illo ab quae nihil praesentium impedit libero possimus id
+                            vero</p>
+                    </div>
                 </div>
-
-            </div> <!-- col // -->
-        </div> <!-- row // -->
+            </div> <!-- col.// -->
+        </div> <!-- row.// -->
     </section>
+    <!-- =============== SECTION BANNER .//END =============== -->
 
-    <!-- =============== SECTION REQUEST .//END =============== -->
 
 
     <!-- =============== SECTION ITEMS =============== -->
@@ -262,7 +229,7 @@
                 </div>
             </div>
             {% endfor %}
-</div>
+        </div>
     </section>
     <!-- =============== SECTION ITEMS .//END =============== -->
 
@@ -288,7 +255,7 @@
                 </article>
             </div>
             {% endfor %}
-</div>
+        </div>
 
 
     </section>

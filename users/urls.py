@@ -12,5 +12,4 @@ urlpatterns += [
     path('profile/', ProfileView.as_view(), name='profile'),
     path('profile/settings/', ProfileSettings.as_view(), name='profile-settings'),
     path('profile/address/', ProfileAddress.as_view(), name='profile-address'),
-    path('profile/orders/', ProfileOrders.as_view(), name='profile-orders')
 ]

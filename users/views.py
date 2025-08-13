@@ -123,10 +123,6 @@ class ProfileAddress(LoginRequiredMixin,View):
         return render(request, 'profile-address.html')
 
 
-class ProfileOrders(LoginRequiredMixin,View):
-    def get(self, request):
-        return render(request, 'profile-orders.html')
-
 
 def logaut_view(request):
     logout(request)

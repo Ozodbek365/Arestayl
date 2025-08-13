@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, get_object_or_404
+from django.template.defaultfilters import first
 from django.views import View
 from datetime import datetime
 from .models import *
@@ -76,3 +77,60 @@ def cart_item_dec(request, cart_item_id):
         cart_item.save()
         return redirect('my-cart')
     return redirect('login')
+
+
+class OrderView(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'order.html')
+
+    def post(self, request):
+        order = Order.objects.create(
+            user=request.user,
+            first_name=self.request.POST.get('first_name', request.user.first_name),
+            last_name=self.request.POST.get('last_name', request.user.last_name),
+            phone_number=self.request.POST.get('phone_number', request.user.phone),
+            county=self.request.POST.get('county', request.user.country),
+            city=self.request.POST.get('city', request.user.city),
+            address=self.request.POST.get('address'),
+            delivery_type=self.request.POST.get('delivery_type'),
+        )
+
+        # Delivery price
+        if order.delivery_type == "Fast":
+            order.total_price = 20
+        else:
+            order.total_price = 0
+
+        cart_items = request.user.cartitem_set.all()
+
+        total_discount = 0
+        total_price_without_discount = 0
+        for cart_item in cart_items:
+            total_price_without_discount += cart_item.product.price * cart_item.amount
+            if cart_item.product.discount_set.filter(end_date__lt=datetime.today()).exists():
+                discount = cart_item.product.discount_set.filter(
+                    end_date__lt=datetime.today()).last().amount * cart_item.amount
+                total_discount += discount
+
+        total_price = total_price_without_discount - total_discount
+        order.total_price = total_price
+        order.save()
+
+        for cart_item in cart_items:
+            OrderItem.objects.create(
+                order=order,
+                product=cart_item.product,
+                amount=cart_item.amount,
+            )
+        cart_items.delete()
+        return redirect('my-cart')
+
+
+class OrdersView(LoginRequiredMixin, View):
+    def get(self, request):
+        orders = Order.objects.filter(user=request.user)
+        context = {
+            'orders': orders,
+        }
+        return render(request, 'profile-orders.html', context)
+

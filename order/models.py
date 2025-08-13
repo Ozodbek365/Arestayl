@@ -31,9 +31,9 @@ class Order(models.Model):
     city = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     delivery_type = models.CharField(max_length=255, choices=DELIVERY_CHOICES)
-    payment_type = models.CharField(max_length=255)
-    status = models.CharField(max_length=255, choices=STATUS_CHOICES)
-    total_price = models.FloatField(validators=[MinValueValidator(0.0)])
+    payment_type = models.CharField(max_length=255, default='CASH')
+    status = models.CharField(max_length=255, choices=STATUS_CHOICES, default='Pending')
+    total_price = models.FloatField(validators=[MinValueValidator(0.0)], blank=True, null=True)
     created_at = models.CharField(max_length=255)
 
     def __str__(self):
